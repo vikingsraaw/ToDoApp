@@ -11,10 +11,9 @@ app.post('/list', async (req, res) => {
         res.send(e)
     }
 })
-app.get('/list/:id',async(req,res) => {
-    const _id=req.params.id
+app.get('/list',async(req,res) => {
     try{
-      const task =await Task.findOne(_id)
+      const task =await Task.findAll()
       if (!task){
           return res.send('no task found')
       }
@@ -32,7 +31,7 @@ app.patch('/list/:id',async(req,res)=>{
         }
         try{
             const task = await Task.findOne({_id:req.params.id})
-            }
+            
             updates.foreach((update)=>task[update]=req.body[update])
             await task.save()
             res.send(task)
